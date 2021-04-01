@@ -22,26 +22,49 @@
 #include "../include/fdmodulo.h"
 #include "../include/fdpseudoaleatoria.h"
 #include "../include/tablahash.h"
+#include "../include/funcionmenu.h"
 
-
-void Usage(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
   Usage(argc, argv);
+  int option = 0, num = 0;
+  cabecera();
+  TablaHash<int> tabla = crear_tabla();
+  do {
+    cabecera();
+    std::cout << "\nBienvenido al menú de la tabla Hash.\n";
+    std::cout << "\t1.- Visualizar tabla.\n"
+              << "\t2.- Insertar elemento.\n"
+              << "\t3.- Buscar elemento.\n"
+              << "\t0.- Para salir.\n"
+              << "\t\tElija una opción: ";   
+    option = control_errores_int(); 
+    switch (option) {
+    case 1:
+      std::cout << std::endl << tabla;
+      presione_una_tecla();
+      break;
+    case 2:
+      std::cout << "Inserte un número: ";
+      num = control_errores_int();
+      probar_insertar(tabla, num);
+      presione_una_tecla();
+      break; 
+    case 3:
+      std::cout << "Inserte un número: ";
+      num = control_errores_int();
+      probar_buscar(tabla, num);
+      presione_una_tecla();
+      break;   
+    case 0: break;
+    default:
+      std::cout << "\n\t\tOpción no válida.\n";
+      presione_una_tecla();
+      break;
+    }
+  } while (option != 0);
 
   return 0;
 }
 
 
-void Usage(int argc, char *argv[]) {
-  if (argc == 2)
-    if((std::string)argv[1] == "-h" || (std::string)argv[1] == "--help") {
-      std::cout << "Uso: " << argv[0] << " [Sin opciones]\n";
-      exit(0);
-    }
-  if (argc != 1) {
-    std::cout << "Tiene argumentos invalidos.\nEscriba "
-              << "--help para más ayuda\n";
-    exit(1);
-  } 
-}

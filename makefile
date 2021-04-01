@@ -3,10 +3,12 @@ CFLAGS = -g -Wall --std=c++17
 
 OBJ_DIR := ./obj
 SRC_DIR := ./src
-EXEC = ./bin/tablahash.out
+BIN_DIR := ./bin
+
+EXEC := a.out
+EXEC := $(EXEC:%=$(BIN_DIR)/%)
 
 SRCS := $(shell ls $(SRC_DIR))
-
 OBJS := $(SRCS:%=$(OBJ_DIR)/%)
 OBJS := $(OBJS:.cpp=.o)
 
@@ -23,10 +25,10 @@ run: clean all
 	$(EXEC)
 
 debug: $(SRCS)
-		$(CC) $(CFLAGS) -o $(EXEC) $^
+	$(CC) $(CFLAGS) -o $(EXEC) $^
 
 .PHONY: clean
 
 clean:
-	rm -f ./bin/*
+	rm -f ./bin/*.out
 	rm -f ./obj/*.o
