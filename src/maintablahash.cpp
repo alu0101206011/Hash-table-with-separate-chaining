@@ -4,23 +4,19 @@
 /// Algoritmos y Estructuras de Datos avanzadas
 ///
 /// @author Anabel Díaz Labrador <alu0101206011@ull.edu.es>
-/// @date 26 Jan 2021
-/// @brief Programa que simule el comportamiento de la hormiga 
-/// de Langton durante un número indefinido de pasos de tiempo
+/// @date 10 April 2021
+/// @brief Programa de tabla hash de dispersión cerrada.
 ///
-/// @see https://es.wikipedia.org/wiki/Hormiga_de_Langton
 ///
 /// To compile: make
 /// To clean files: make clean
 /// To debug: make debug
 
 #include <iostream>
-#include <list>
 
-#include "../include/listaclave.h"
+#include "../include/vectorclave.h"
 #include "../include/funciondispersion.h"
-#include "../include/fdmodulo.h"
-#include "../include/fdpseudoaleatoria.h"
+#include "../include/funcionexploracion.h"
 #include "../include/tablahash.h"
 #include "../include/funcionmenu.h"
 
@@ -49,7 +45,7 @@ int main(int argc, char *argv[]) {
       num = control_errores_int();
       probar_insertar(tabla, num);
       presione_una_tecla();
-      break; 
+      break;
     case 3:
       std::cout << "Inserte un número: ";
       num = control_errores_int();
@@ -63,6 +59,8 @@ int main(int argc, char *argv[]) {
       break;
     }
   } while (option != 0);
+
+  
 
   return 0;
 }

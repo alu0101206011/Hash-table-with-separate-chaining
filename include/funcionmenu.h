@@ -6,6 +6,8 @@ void cabecera(void);
 TablaHash<int> crear_tabla(void);
 // Creación función dispersion
 FuncionDispersion<int>* crear_fd(int size);
+// Creación función exploración
+FuncionExploracion<int>* crear_fe(int size, FuncionDispersion<int>* fd);
 
 void probar_insertar(TablaHash<int>& tabla, int numero);
 void probar_buscar(TablaHash<int>& tabla, int numero);

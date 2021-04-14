@@ -1,10 +1,9 @@
 #include <iostream>
-#include <list>
+#include <set>
 
-#include "../include/listaclave.h"
+#include "../include/vectorclave.h"
 #include "../include/funciondispersion.h"
-#include "../include/fdmodulo.h"
-#include "../include/fdpseudoaleatoria.h"
+#include "../include/funcionexploracion.h"
 #include "../include/tablahash.h"
 #include "../include/funcionmenu.h"
 
@@ -45,7 +44,8 @@ TablaHash<int> crear_tabla(void) {
     }
   }
   FuncionDispersion<int>* fd = crear_fd(size);
-  TablaHash<int> tabla(size, fd);
+  FuncionExploracion<int>* fe = crear_fe(size, fd);
+  TablaHash<int> tabla(size, fd, size - 1, fe);
   std::cout << "¡Tabla creada!\n";
   presione_una_tecla();
   return tabla;
@@ -68,12 +68,45 @@ FuncionDispersion<int>* crear_fd(int size) {
       fd = new fdPseudoAleatoria<int>((unsigned)size);
       break;    
     default:
-      std::cout << "\n\t\tFunción de dispersión no valida, introduzca un valor de 1 al 2.\n";
+      std::cout << "\n\t\tFunción de dispersión no válida, introduzca un valor de 1 al 2.\n";
       option = 0;
       break;
     }
   } while (option == 0);
   return fd;
+}
+
+
+FuncionExploracion<int>* crear_fe(int size, FuncionDispersion<int>* fd) {
+  int option = 0;
+  FuncionExploracion<int>* fe;
+  do {
+    std::cout << "\n\t1.- Función de exploración lineal.\n"
+              << "\t2.- Función de exploración cuadrática.\n"
+              << "\t3.- Función de exploración de dispersion doble\n"
+              << "\t4.- Función de exploración de redispersion\n";
+    std::cout << "\n\t\tIntroduzca la función de dispersión que desee: ";
+    option = control_errores_int();
+    switch (option) {
+    case 1:
+      fe = new feLineal<int>();
+      break;
+    case 2:
+      fe = new feCuadratica<int>();
+      break;    
+    case 3:
+      fe = new feDispersionDoble<int>(size, fd->which_dispersion());
+      break;    
+    case 4:
+      fe = new feReDispersion<int>(size);
+      break;    
+    default:
+      std::cout << "\n\t\tFunción de exploración no válida, introduzca un valor de 1 al 2.\n";
+      option = 0;
+      break;
+    }
+  } while (option == 0);
+  return fe;
 }
 
 
